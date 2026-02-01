@@ -1,0 +1,119 @@
+/* Wrapper for the Anki page (scopes everything) */
+.anki-page {
+  font-family: Arial, sans-serif;
+  background: linear-gradient(135deg, #eef2f3, #8e9eab);
+  color: #333;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  min-height: 100vh;
+  width: 100vw;
+  box-sizing: border-box;
+  padding: 24px;
+}
+
+/* The main app card */
+.anki-page main {
+  background: white;
+  width: 90%;
+  max-width: 800px;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+/* Header */
+.anki-page header {
+  text-align: center;
+  background: #4a90e2;
+  color: white;
+  padding: 20px;
+}
+
+.anki-page header h1 {
+  font-size: 2rem;
+}
+
+.anki-page header h2 {
+  font-size: 1.2rem;
+  margin-top: 10px;
+}
+
+/* Input Section */
+.anki-page .input-section {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+}
+
+.anki-page .input-section input {
+  width: 100%;
+  max-width: 400px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 1rem;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.anki-page .input-section input:focus {
+  border-color: #4a90e2;
+}
+
+/* Button Group */
+.anki-page .button-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+/* Buttons scoped ONLY to Anki page */
+.anki-page .button-group button {
+  padding: 10px 15px;
+  border: none;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  background: #4a90e2;
+  color: white;
+  transition: background 0.3s;
+}
+
+.anki-page .button-group button:hover {
+  background: #357abd;
+}
+
+/* Language Lists (match your React class "LanguageList") */
+.anki-page .LanguageList {
+  display: flex;
+  justify-content: space-around;
+  padding: 20px;
+  gap: 20px;
+}
+
+/* Lists scoped */
+.anki-page .LanguageList ul {
+  list-style-type: disc;
+  margin-top: 10px;
+  padding-left: 20px;
+}
+
+.anki-page .LanguageList li {
+  font-size: 16px;
+  margin: 5px 0;
+}
+
+.anki-page .list-container {
+  display: block;
+  flex: 1;
+}
+
+/* Links scoped */
+.anki-page a {
+  display: block;
+}
