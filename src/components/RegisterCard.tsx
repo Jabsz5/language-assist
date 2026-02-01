@@ -1,26 +1,53 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
+const API_BASE = import.meta.env.VITE_API_BASE ?? 'http://localhost:3000';
+
 export default function RegisterCard() {
   const navigate = useNavigate();
 
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState<string | null>(null);
+  const [busy, setBusy] = useState(false);
 
-  function handleSubmit(e: React.SyntheticEvent) {
+  async function handleSubmit(e: React.SyntheticEvent) {
     e.preventDefault();
     setError(null);
 
-    if (!username || !password) {
+    const u = username.trim();
+    const p = password;
+
+    if (!u || !p) {
       setError('Username and password are required');
       return;
     }
 
-    console.log('Create account attempt:', { username, password });
+    setBusy(true);
+    try {
+      const res = await fetch(`${API_BASE}/signup`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ username: u, password: p }),
+      });
 
-    // Temporary success path
-    navigate('/login');
+      if (!res.ok) {
+        const msg = await res.text().catch(() => '');
+        setError(msg || `Signup failed (${res.status})`);
+        return;
+      }
+
+      // success
+      // (optional) clear fields
+      setPassword('');
+
+      // go back to login page
+      navigate('/login');
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Network error');
+    } finally {
+      setBusy(false);
+    }
   }
 
   return (
@@ -34,6 +61,7 @@ export default function RegisterCard() {
         onChange={(e) => setUsername(e.currentTarget.value)}
         placeholder="Enter username"
         autoComplete="username"
+        disabled={busy}
       />
 
       <div className="Password">Password</div>
@@ -43,11 +71,19 @@ export default function RegisterCard() {
         onChange={(e) => setPassword(e.currentTarget.value)}
         placeholder="Enter password"
         autoComplete="new-password"
+        disabled={busy}
       />
 
-      {error && <p>{error}</p>}
+      {error && <p className="auth-error">{error}</p>}
 
-      <button type="submit">Create account</button>
+      <button type="submit" disabled={busy}>
+        {busy ? 'Creating…' : 'Create account'}
+      </button>
+
+      {/* Optional: quick back link */}
+      <button type="button" onClick={() => navigate('/login')} disabled={busy}>
+        Back to login
+      </button>
     </form>
   );
 }

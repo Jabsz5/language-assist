@@ -1,26 +1,59 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
+type LoginResponse = {
+  username: string;
+  userId: number;
+  vocabulary: {
+    spanish: string[];
+    russian: string[];
+  };
+};
+
+const API_BASE = import.meta.env.VITE_API_BASE ?? 'http://localhost:3000';
+
 export default function LoginCard() {
   const navigate = useNavigate();
 
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState<string | null>(null);
+  const [busy, setBusy] = useState(false);
 
-  function handleSubmit(e: React.SyntheticEvent) {
+  async function handleSubmit(e: React.SyntheticEvent) {
     e.preventDefault();
     setError(null);
 
-    if (!username || !password) {
+    const u = username.trim();
+    const p = password;
+
+    if (!u || !p) {
       setError('Username and password are required');
       return;
     }
 
-    console.log('Login attempt:', { username, password });
+    setBusy(true);
+    try {
+      const res = await fetch(`${API_BASE}/login`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ username: u, password: p }),
+      });
 
-    // Temporary success path
-    navigate('/anki');
+      if (!res.ok) {
+        const msg = await res.text().catch(() => '');
+        setError(msg || `Login failed (${res.status})`);
+        return;
+      }
+
+      const data = (await res.json()) as LoginResponse;
+      // Navigate and pass session-ish info for now
+      navigate('/anki', { state: data });
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Network error');
+    } finally {
+      setBusy(false);
+    }
   }
 
   function handleRegisterRedirect() {
@@ -51,8 +84,13 @@ export default function LoginCard() {
 
       {error && <p className="auth-error">{error}</p>}
 
-      <button type="submit">Login</button>
-      <button type="button" onClick={handleRegisterRedirect}> Create an account here </button>  
+      <button type="submit" disabled={busy}>
+        {busy ? 'Logging in…' : 'Login'}
+      </button>
+
+      <button type="button" onClick={handleRegisterRedirect} disabled={busy}>
+        Create an account here
+      </button>
     </form>
   );
 }
