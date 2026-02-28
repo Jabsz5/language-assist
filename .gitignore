@@ -22,3 +22,14 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# pythonv virtual environments
+venv/
+server/python_analyzer/venv/
+
+#python cache
+__pycache__/
+*.pyc
+
+# NLP model downloads
+stanza_resources/

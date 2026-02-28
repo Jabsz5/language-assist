@@ -1,0 +1,50 @@
+from flask import Flask, request, jsonify
+from flask_cors import CORS
+import spacy
+import spacy_stanza
+import re
+
+app = Flask(__name__)
+CORS(app)
+
+# Load both models at once
+nlp_es = spacy.load("es_core_news_md")
+nlp_ru = spacy_stanza.load_pipeline("ru", processors="tokenize,pos,lemma")
+
+MODELS = {
+    "es": nlp_es,
+    "ru": nlp_ru,
+}
+
+@app.route('/analyze', methods=['POST'])
+def analyze_text():
+    data = request.get_json()
+    text = data.get("text", "")
+    language = data.get("language")
+
+    if not text.strip():
+        return jsonify({"error": "No text provided."}), 400
+
+    print("language detected: ", language)
+
+    if (language == 'Latin'):
+        language = 'es'
+        nlp = MODELS[language]
+    if (language == 'Cyrillic'):
+        language = 'ru'
+        nlp = MODELS[language]
+
+    doc = nlp(text)
+
+    result = []
+    for token in doc:
+        result.append({
+            "word": token.text,
+            "lemma": token.lemma_,
+            "POS": token.pos_
+        })
+
+    return jsonify(result)
+
+if __name__ == '__main__':
+    app.run(host="0.0.0.0", port=5000)

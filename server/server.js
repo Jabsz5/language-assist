@@ -210,6 +210,20 @@ app.get('/get-vocabulary', async (req, res) => {
   }
 });
 
+app.post("/api/analyze", async (req, res) => {
+  try {
+    const response = await fetch("http://localhost:5000/analyze", {
+      method: "POST",
+      headers: {"Content-Type": "application/json",},
+      body: JSON.stringify({ story: storyInput }),
+    });
+
+    const data = await response.json();
+    res.json(data);
+    } catch(err){
+      res.status(500).json({ error: "NLP service failed" });
+    }
+});
 
 // ---- Start server ----
 app.listen(PORT, () => {

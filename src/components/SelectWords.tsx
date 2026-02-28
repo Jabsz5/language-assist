@@ -20,10 +20,16 @@ export default function SelectWords({
   const words =
     activeLang === "Spanish" ? spanishWords : russianWords;
 
-  const selected =
-    activeLang === "Spanish"
-      ? selectedSpanish
-      : selectedRussian;
+  const selected = activeLang === "Spanish" ? selectedSpanish :selectedRussian;
+
+  function saveSelections(
+    spanish: Set<string>,
+    russian: Set<string>,
+    activeLang: Language
+  ) {
+    const words = activeLang === "Spanish" ? Array.from(spanish) : Array.from(russian);
+    localStorage.setItem("selectedWords", JSON.stringify(words));
+  }
 
   // toggle highlight + logging
   function toggleWord(word: string) {
@@ -40,6 +46,8 @@ export default function SelectWords({
         }
 
         console.log("Spanish highlighted count:", next.size);
+        // save to localStorage whenever selection changes
+        saveSelections(next, selectedRussian, "Spanish");
         return next;
       });
     } else {
@@ -55,6 +63,8 @@ export default function SelectWords({
         }
 
         console.log("Russian highlighted count:", next.size);
+        // save to localStorage whenever selection changes
+        saveSelections(selectedSpanish, next, "Russian");
         return next;
       });
     }
