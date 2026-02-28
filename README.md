@@ -71,3 +71,13 @@ export default defineConfig([
   },
 ])
 ```
+
+Required dependencies include 
+python 3.11
+
+python -m pip install --upgrade pip setuptools wheel
+pip install "numpy<2.0"
+pip install flask flask-cors spacy spacy-stanza stanza
+pip install torch==2.3.1
+python -m spacy download es_core_news_md
+python -c "import stanza; stanza.download('ru')"
