@@ -32,6 +32,14 @@ export default function AnkiClone() {
   const [busy, setBusy] = useState(false);
 
   const trimmed = useMemo(() => textbox.trim(), [textbox]);
+  
+  // okay there is nothing inside localStorage. let's store these words in localStorage. No need to call backend again since we already have them here, and this will persist them across refreshes until we implement the backend storage
+  useEffect(() => {
+    localStorage.setItem('spanishWords', JSON.stringify(spanishWords));
+    localStorage.setItem('russianWords', JSON.stringify(russianWords));
+  }, [spanishWords, russianWords]);
+
+
 
   // If user refreshes /anki, location.state is lost → kick back to login for now
   useEffect(() => {

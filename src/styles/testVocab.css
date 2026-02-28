@@ -10,6 +10,20 @@
   box-sizing: border-box;
 }
 
+/* --------------------------------
+   Force readable text on this page
+---------------------------------- */
+
+.testvocab-page h1,
+.testvocab-page h2,
+.testvocab-page h3,
+.testvocab-page p,
+.testvocab-page li,
+.testvocab-page span,
+.testvocab-page div {
+  color: #222;
+}
+
 /* Left content: Story writing */
 .testvocab-page .content {
   flex: 2;
@@ -116,4 +130,32 @@
 .testvocab-page .vocab-word.selected {
   background-color: #4a90e2;
   color: white;
+}
+
+/* ===============================
+   SelectWords Component Styling
+================================ */
+
+/* normal words */
+.testvocab-page .selectable-list li{
+  background: white;
+  color: black;              /* FIX: make text visible */
+  padding: 8px 10px;
+  margin-bottom: 6px;
+  border-radius: 6px;
+  border: 1px solid #ddd;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+}
+
+/* hover effect */
+.testvocab-page .selectable-list li:hover {
+  background-color: #e0e0e0;
+}
+
+/* highlighted words */
+.testvocab-page .selectable-list li.selected-word {
+  background-color: #4a90e2 !important;
+  color: white !important;
+  border-color: #357abd;
 }
