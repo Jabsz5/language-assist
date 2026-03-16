@@ -16,7 +16,7 @@ export default function AnkiActions({ onAdd, onRemove, onExport, onRecommend }: 
       <button onClick={onExport}>Export</button>
 
       <button onClick={() => navigate('/test')}>Test Yourself!</button>
-      <button onClick={() => navigate('/ai')}>New AI feature!</button>
+      <button onClick={() => navigate('/asr')}>New AI feature!</button>
 
       <button onClick={onRecommend}>Recommend</button>
     </div>

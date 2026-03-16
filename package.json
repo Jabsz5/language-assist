@@ -7,7 +7,12 @@
     "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "frontend": "npm run dev",
+    "backend": "node ./server/server.js",
+    "analyzer": "python ./server/python_analyzer/analyze.py",
+    "transcriber": "python ./server/python_analyzer/russianTranscribe_api.py",
+    "start:all": "concurrently -n FRONTEND,BACKEND,ANALYZER,TRANSCRIBER -c blue,green,magenta,red \"npm run frontend\" \"npm run backend\" \"npm run analyzer\" \"npm run transcriber\""
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.93.3",
@@ -17,6 +22,7 @@
     "express": "^5.2.1",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
+    "react-markdown": "^10.1.0",
     "react-router-dom": "^7.13.0"
   },
   "devDependencies": {
@@ -25,6 +31,7 @@
     "@types/react": "^19.2.5",
     "@types/react-dom": "^19.2.3",
     "@vitejs/plugin-react": "^5.1.1",
+    "concurrently": "^9.2.1",
     "eslint": "^9.39.1",
     "eslint-plugin-react-hooks": "^7.0.1",
     "eslint-plugin-react-refresh": "^0.4.24",

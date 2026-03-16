@@ -3,6 +3,7 @@ import Login from './pages/Login';
 import AnkiClone from './pages/AnkiClone';
 import CreateAccount from './pages/CreateAccount';
 import TestVocab from './pages/TestVocab';
+import LLMASMR from './pages/LLMASMR';
 
 export default function App() {
   return (
@@ -13,6 +14,7 @@ export default function App() {
         <Route path="signup" element={<CreateAccount />} />
         <Route path="/anki" element={<AnkiClone />} />
         <Route path="/test" element={<TestVocab />} />
+        <Route path="/asr" element={<LLMASMR />} />
       </Routes>
     </BrowserRouter>
   );

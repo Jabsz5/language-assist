@@ -1,0 +1,128 @@
+/* Force text to be black inside LLMASR page */
+.llmasr-page,
+.llmasr-page h1,
+.llmasr-page h2,
+.llmasr-page h3,
+.llmasr-page p,
+.llmasr-page div,
+.llmasr-page span {
+  color: #000;
+}
+
+body {
+  background-color: #ffffff;
+}
+
+/* Wrapper for LLM ASR page */
+.llmasr-page {
+  font-family: Arial, sans-serif;
+  background: #ffffff;
+  color: #333;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  min-height: 100vh;
+  width: 100vw;
+  box-sizing: border-box;
+  padding: 24px;
+}
+
+/* Main card */
+.llmasr-page main {
+  background: white;
+  width: 90%;
+  max-width: 700px;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Header */
+.llmasr-page header {
+  text-align: center;
+  background: #4a90e2;
+  color: white;
+  padding: 20px;
+  width: 100%;
+}
+
+.llmasr-page header h1 {
+  font-size: 2rem;
+}
+
+/* Content section */
+.llmasr-page .asr-section {
+  padding: 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+
+/* Volume image */
+.llmasr-page .volume-image {
+  width: 220px;
+  height: 220px;
+  object-fit: contain;
+}
+
+/* ASR output box */
+.llmasr-page .asr-output {
+  min-height: 60px;
+  width: 100%;
+  max-width: 500px;
+  padding: 15px;
+  border: 2px solid #ccc;
+  border-radius: 10px;
+  font-size: 1.2rem;
+  text-align: center;
+  background: #f9f9f9;
+}
+
+/* Buttons */
+.llmasr-page .button-group {
+  display: flex;
+  gap: 15px;
+}
+
+.llmasr-page .button-group button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  cursor: pointer;
+  background: #4a90e2;
+  color: white;
+  transition: background 0.3s;
+}
+
+.llmasr-page .button-group button:hover {
+  background: #357abd;
+}
+
+/* Make volume image interactive */
+.llmasr-page .clickable {
+  cursor: pointer;
+  transition: transform 0.15s ease, opacity 0.15s ease;
+}
+
+.llmasr-page .clickable:hover {
+  transform: scale(1.05);
+}
+
+.llmasr-page .clickable:active {
+  transform: scale(0.95);
+  opacity: 0.8;
+}
+
+.llm-response {
+  white-space: pre-wrap;
+  line-height: 1.5;
+  font-family: monospace;
+}
